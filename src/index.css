@@ -1,13 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#main {
+  height: 100vh;
+  background-image: url("https://transparenttextures.com/patterns/60-lines.png");
+}
+
+#pad {
+  background-image: url("https://transparenttextures.com/patterns/crisp-paper-ruffles.png");
+  width: 35rem;
+}
+
+.add {
+  animation: IN 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.notadd {
+  animation: Out 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.del{
+  animation: Trash 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes IN {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes Trash {
+  from{
+    opacity: 1;
+  }
+  to{
+    transform: translateX(300px);
+    opacity: 0;
+  }
+}
+
+@keyframes Out {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+
+
+@media (max-width:460px) {
+  #pad{
+    width:80%;
+  }
+}
+
+
+input[type=checkbox],label:hover{
+  cursor: pointer;
+}
+
+input:checked+label{
+  text-decoration: line-through;
 }
