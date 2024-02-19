@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Note from "./Note";
+import axios from "axios";
 
 const useFocus = () => {
   const ref = useRef(null);
@@ -15,6 +16,20 @@ export default function NotePad() {
   const [items, setItems] = useState([]);
   const [inputFocus, setInputFocus] = useFocus();
 
+  const getAllItems = async () => {
+    const res = await axios.get("http://localhost:5000/lists");
+    console.log(res.data);
+    setItems(res.data);
+  };
+  const addItem = async (item) => {
+    await axios.post("http://localhost:5000/lists", {
+      note: item,
+    });
+  };
+  useEffect(() => {
+    getAllItems();
+  });
+
   const handleClick = () => {
     const element = document.getElementById("TEXT");
     if (!Bool) {
@@ -23,32 +38,37 @@ export default function NotePad() {
       element.classList.add("add");
     } else {
       setBool(false);
-      setItems((prevalue) => {
-        if (curItem === "") {
-          return [...prevalue];
-        }
-        return [...prevalue, curItem];
-      });
+      if (curItem !== "") {
+        addItem(curItem);
+      }
       setCurItem("");
       element.classList.remove("add");
       element.classList.add("notadd");
     }
   };
 
-  const deleteItem=(id)=>{
-    setItems((preValue)=>{
-      return preValue.filter((b,a)=>a!==id);
-    })
-  }
-
+  const deleteItem =async (id) => {
+    await axios.delete("http://localhost:5000/lists/"+id);
+  };
 
   return (
-    <div id="pad" className=" bg-sec1 text-sec3 mt-8 text-3xl   rounded-xl shadow-xl border border-black py-5">
+    <div
+      id="pad"
+      className=" bg-sec1 text-sec3 mt-8 text-3xl   rounded-xl shadow-xl border border-black py-5"
+    >
       <ul>
         <li className=" w-11/12 m-auto">
-          <ul className=" mx-2  max-w-full">{items.map((item,index) =>{
-            return <Note text={item} id={index} handleDelete={deleteItem}/>
-            })}</ul>
+          <ul className=" mx-2  max-w-full">
+            {items.map((item) => {
+              return (
+                <Note
+                  text={item.note}
+                  id={item._id}
+                  handleDelete={deleteItem}
+                />
+              );
+            })}
+          </ul>
         </li>
         <li className=" relative ">
           <div className=" absolute flex  items-center justify-center w-full">
