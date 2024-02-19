@@ -17,12 +17,12 @@ export default function NotePad() {
   const [inputFocus, setInputFocus] = useFocus();
 
   const getAllItems = async () => {
-    const res = await axios.get("http://localhost:5000/lists");
+    const res = await axios.get("https://todolistdb-7tdr.onrender.com/lists");
     console.log(res.data);
     setItems(res.data);
   };
   const addItem = async (item) => {
-    await axios.post("http://localhost:5000/lists", {
+    await axios.post("https://todolistdb-7tdr.onrender.com/lists", {
       note: item,
     });
   };
@@ -48,7 +48,7 @@ export default function NotePad() {
   };
 
   const deleteItem =async (id) => {
-    await axios.delete("http://localhost:5000/lists/"+id);
+    await axios.delete("https://todolistdb-7tdr.onrender.com//lists/"+id);
   };
 
   return (
