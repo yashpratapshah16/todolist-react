@@ -48,7 +48,7 @@ export default function NotePad() {
   };
 
   const deleteItem =async (id) => {
-    await axios.delete("https://todolistdb-7tdr.onrender.com//lists/"+id);
+    await axios.delete("https://todolistdb-7tdr.onrender.com/lists/"+id);
   };
 
   return (
